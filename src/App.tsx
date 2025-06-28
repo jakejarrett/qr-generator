@@ -1,7 +1,7 @@
 import { Flex } from "@radix-ui/themes";
 import type { FC } from "react";
 import { QRCard } from "./components/QRCard";
-import { QRControlBar } from "./components/BottomBar";
+import { QRControlBar } from "./components/QRControlBar";
 
 export const App: FC = () => {
   return (

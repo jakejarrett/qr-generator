@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
-import type { SupportedBCID } from '../components/bcid.type'
+import type { SupportedBCID } from '../bcid'
 
 interface QRActions {
     update: (options: Partial<QRState>) => void;
@@ -21,10 +21,11 @@ export const useQRStore = create<QRStore>()(
             (set) => ({
                 bcid: 'qrcode',
                 code: '',
-                color: '',
-                background: '',
+                color: '#000',
+                background: '#fff',
                 update: (opts) => {
-                    set({
+                    console.log(opts);
+                    return set({
                         ...opts,
                     })
                 },

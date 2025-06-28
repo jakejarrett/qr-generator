@@ -110,7 +110,7 @@ export type SupportedBCID = "auspost" |
     "upce" |
     "upcecomposite";
 
-export const BCID_LIST = [
+export const BCID_LIST: SupportedBCID[] = [
     "auspost",
     "azteccode",
     "azteccodecompact",

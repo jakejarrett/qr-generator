@@ -1,6 +1,8 @@
 import { Box, Card } from "@radix-ui/themes";
 import type { FC } from "react";
 import bwipjs from 'bwip-js';
+import { useShallow } from "zustand/shallow";
+import { useQRStore } from "../store/qr.store";
 
 interface QRCardProps {
     code: string;
@@ -10,7 +12,8 @@ interface QRCardProps {
 }
 
 export const QRCard: FC<QRCardProps> = () => {
-    // state here
+    const state = useQRStore(useShallow(s => s));
+
     return (
         <Box maxWidth="256px">
             <Card>
@@ -23,13 +26,14 @@ export const QRCard: FC<QRCardProps> = () => {
                         }
 
                         bwipjs.toCanvas(canvas, {
-                            bcid: 'qrcode',               // Barcode type
-                            text: '0123456789',            // Text to encode
+                            bcid: state.bcid || 'qrcode',               // Barcode type
+                            text: state.code || 'test',            // Text to encode
                             // scale: 400, // Scaling factor for high-DPI devices
                             // height: 10,                      // Bar height, in millimeters
                             textxalign: 'center',                // Always good to set this
-                            textcolor: '#fff',
-                            barcolor: '#fff',
+                            textcolor: state.color,
+                            barcolor: state.color,
+                            backgroundcolor: state.background
                         });
                     }}
                 />
