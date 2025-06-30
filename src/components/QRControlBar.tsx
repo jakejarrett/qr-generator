@@ -1,15 +1,42 @@
-import type { FC } from "react";
-import { Box, Flex, Heading, TextField } from "@radix-ui/themes";
+import { useState, type FC, type MouseEvent } from "react";
+import { Box, Button, Flex, Heading, TextField } from "@radix-ui/themes";
 import { useShallow } from "zustand/shallow";
 
 import { useQRStore } from "../store/qr.store";
 import { BCIDSearch } from "./BCIDSearch";
 import { ColorPicker } from "./ColorPicker";
+import bwipjs from 'bwip-js';
+
+const saveSVG = (svg: string, name: string) => {
+    const svgBlob = new Blob([svg], { type: "image/svg+xml;charset=utf-8" });
+    const svgUrl = URL.createObjectURL(svgBlob);
+    const downloadLink = document.createElement("a");
+    downloadLink.href = svgUrl;
+    downloadLink.download = `${name}.svg`;
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+}
 
 export const QRControlBar: FC = () => {
     const state = useQRStore(useShallow(s => s));
+    const [name, setName] = useState<string>("generated_svg");
 
-    console.log(state);
+    const onClick = (e: MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        saveSVG(
+            bwipjs.toSVG({
+                bcid: state.bcid || ' ',
+                text: state.code || ' ',
+                textxalign: 'center',
+                textcolor: state.color,
+                barcolor: state.color,
+                backgroundcolor: state.background
+            }),
+            name
+        );
+    }
+
 
     return (
         <Flex flexShrink="0" gap="6" direction="column" width="100vw" style={{ overflow: "visible" }}>
@@ -41,16 +68,19 @@ export const QRControlBar: FC = () => {
                     <Flex align="center" gap="3">
                         <Flex direction="row" align="center" gap="2">
                             <Heading size="1">Background</Heading>
-                            <ColorPicker defaultValue={state.background} onChange={h => state.update({ background: h })} />
+                            <ColorPicker value={state.background} onChange={h => state.update({ background: h })} />
                         </Flex>
                         <Flex direction="row" align="center" gap="2">
                             <Heading size="1">Foreground</Heading>
-                            <ColorPicker defaultValue={state.color} onChange={h => state.update({ color: h })} />
+                            <ColorPicker value={state.color} onChange={h => state.update({ color: h })} />
                         </Flex>
                     </Flex>
 
                     <Flex align="center" gap="2" p="5">
-                        End
+                        <TextField.Root placeholder="Enter file name here" radius="large" className="box-shadow-none" value={name} onChange={e => setName(e.target.value)}>
+                            <TextField.Slot></TextField.Slot>
+                        </TextField.Root>
+                        <Button color="jade" onClick={onClick}>Download</Button>
                     </Flex>
                 </Flex>
             </Box>

@@ -5,21 +5,19 @@ import { SketchPicker } from "react-color";
 import "./styles.css";
 
 interface ColorPickerProps {
-    defaultValue: string;
+    value: string;
     onChange: (hex: string) => void;
 }
 
-export const ColorPicker: React.FC<ColorPickerProps> = ({ defaultValue, onChange }) => {
-    const [color, setColor] = React.useState<string>(defaultValue);
-
+export const ColorPicker: React.FC<ColorPickerProps> = ({ value, onChange }) => {
     return (
         <Popover.Root>
             <Popover.Trigger asChild>
-                <button className="IconButton" aria-label="Update dimensions" style={{ backgroundColor: color }} />
+                <button className="IconButton" aria-label="Update dimensions" style={{ backgroundColor: value }} />
             </Popover.Trigger>
             <Popover.Portal>
-                <Popover.Content className="PopoverContent" sideOffset={5}>
-                    <SketchPicker color={color} onChange={c => setColor(c.hex)} onChangeComplete={({ hex }) => onChange(hex)} />
+                <Popover.Content className="PopoverContent" sideOffset={0}>
+                    <SketchPicker color={value} onChange={({ hex }) => onChange(hex)} onChangeComplete={({ hex }) => onChange(hex)} />
                     <Popover.Arrow className="PopoverArrow" />
                 </Popover.Content>
             </Popover.Portal>

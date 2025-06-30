@@ -4,6 +4,7 @@ import type { SupportedBCID } from '../bcid'
 
 interface QRActions {
     update: (options: Partial<QRState>) => void;
+    reset: () => void;
 }
 
 interface QRState {
@@ -20,7 +21,7 @@ export const useQRStore = create<QRStore>()(
         persist(
             (set) => ({
                 bcid: 'qrcode',
-                code: '',
+                code: 'test',
                 color: '#000',
                 background: '#fff',
                 update: (opts) => {
@@ -29,6 +30,12 @@ export const useQRStore = create<QRStore>()(
                         ...opts,
                     })
                 },
+                reset: () => set({
+                    bcid: 'qrcode',
+                    code: 'test',
+                    color: '#000',
+                    background: '#fff',
+                }),
             }),
             {
                 name: 'qr-generator-state',
