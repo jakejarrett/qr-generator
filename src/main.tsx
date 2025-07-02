@@ -14,8 +14,10 @@ createRoot(document.getElementById('root')!).render(
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<App />} />
+          <Route path="/barcode" element={<App />} />
         </Routes>
       </BrowserRouter>
+
     </Theme>
   </StrictMode>,
 )

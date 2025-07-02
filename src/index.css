@@ -23,3 +23,10 @@ body {
 .font-sm {
     font-size: 0.8rem;
 }
+
+#root {
+    position: relative;
+    max-width: 100dvw;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
