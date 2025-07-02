@@ -21,6 +21,8 @@ export const QRCard: FC = () => {
                             text: state.code || ' ',            // Text to encode
                             // scale: 400, // Scaling factor for high-DPI devices
                             // height: 10,                      // Bar height, in millimeters
+                            width: 32,
+                            height: 32,
                             textxalign: 'center',                // Always good to set this
                             textcolor: state.color,
                             barcolor: state.color,

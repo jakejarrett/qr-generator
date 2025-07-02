@@ -7,13 +7,13 @@ import { ErrorBoundaryContent } from "./components/ErrorBoundaryContent";
 
 export const App: FC = () => {
   return (
-    <Flex direction="column" gap="2" p="0" overflow={"visible"}>
+    <Flex direction="column" p="0" overflow={"visible"}>
       <ErrorBoundary fallback={<>
         <ErrorBoundaryContent />
       </>}>
         <>
           <QRControlBar />
-          <Flex direction="column" gap="2" p="3" mt="9" align="center">
+          <Flex direction="column" gap="2" p="3" align="center" justify="center" height="calc(100svh - 116px)" maxHeight="100dvh">
             <QRCard />
           </Flex>
         </>
