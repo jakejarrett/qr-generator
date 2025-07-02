@@ -1,4 +1,4 @@
-import { Flex, Heading } from "@radix-ui/themes";
+import { Flex } from "@radix-ui/themes";
 import type { FC } from "react";
 import { QRCard } from "./components/QRCard";
 import { QRControlBar } from "./components/QRControlBar";
