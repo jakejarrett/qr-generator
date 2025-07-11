@@ -2,10 +2,9 @@
 @import "@radix-ui/colors/mauve.css";
 @import "@radix-ui/colors/violet.css";
 
-/* reset */
-button,
-fieldset,
-input {
+.PopoverContent button,
+.PopoverContent fieldset,
+.PopoverContent input {
     all: unset;
 }
 
@@ -161,4 +160,18 @@ input {
         opacity: 1;
         transform: translateX(0);
     }
+}
+
+.sketch-picker {
+    background-color: #242222 !important;
+    backdrop-filter: blur(64px);
+    color: white !important;
+}
+
+.sketch-picker>div:last-of-type {
+    border-top-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+.sketch-picker label {
+    color: white !important;
 }

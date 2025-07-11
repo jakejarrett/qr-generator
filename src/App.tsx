@@ -1,26 +1,32 @@
-import { Flex } from "@radix-ui/themes";
 import type { FC } from "react";
 import { QRCard } from "./components/QRCard";
 import { QRControlBar } from "./components/QRControlBar";
 import { ErrorBoundary } from "react-error-boundary";
 import { ErrorBoundaryContent } from "./components/ErrorBoundaryContent";
 import { Frame } from "./components/Frame";
+import { Landing } from "./Homepage";
 
-export const App: FC = () => {
+export interface AppProps {
+  app: "barcode" | "sku" | "landing";
+}
+
+export const App: FC<AppProps> = ({ app }) => {
   return (
-    <Flex direction="column" p="0" overflow={"visible"}>
-      <ErrorBoundary fallback={<>
-        <ErrorBoundaryContent />
-      </>}>
-        <>
-          <QRControlBar />
-          <Flex direction="column" gap="2" p="3" align="center" justify="center" height="calc(100svh - 212px)" maxHeight="100dvh">
-            <QRCard />
-          </Flex>
-          <Frame />
-        </>
+    <div className="flex flex-col p-0 overflow-hidden">
+      <ErrorBoundary fallback={<ErrorBoundaryContent />}>
+        {app === "landing" ? (
+          <Landing />
+        ) : (
+          <>
+            <QRControlBar />
+            <div className="flex flex-col gap-2 p-3 items-center justify-center app-core max-h-dvh">
+              <QRCard />
+            </div>
+            <Frame app={app} />
+          </>
+        )}
       </ErrorBoundary>
-    </Flex>
+    </div>
   );
 
 };

@@ -1,47 +1,39 @@
 import type { FC } from "react";
-import { Box, Flex, Text } from "@radix-ui/themes";
+import { Link } from "react-router";
+import { PiBarcodeThin, PiHouseThin, PiTableThin } from "react-icons/pi";
+
+import type { AppProps } from "../../App";
 
 import "./style.css";
-import { useLocation } from "react-router";
-import { QRIcon } from "./icons";
 
-export const Frame: FC = () => {
-    const { pathname } = useLocation();
-
-    console.log(pathname)
+export const Frame: FC<AppProps> = ({ app }) => {
 
     return (
-        <Flex flexShrink="0" gap="6" direction="column" width="100vw" style={{ overflow: "visible" }}>
-            <Box
-                mb="5"
-                px="2"
-                style={{
-                    borderRadius: ".5rem",
-                    boxShadow: "var(--shadow-6)",
-                    marginLeft: 200,
-                    marginRight: 200,
-                    overflow: "visible",
-                    background: 'rgba(255, 255, 255, 0.05)',
-                    backdropFilter: 'blur(10px)'
-                }}
-            >
-                <Flex height="100%" justify="between" position="relative">
-                    <Flex gap="4" align="center" p="1">
-                        <Flex direction="column" align="center" gap="1" style={{ color: 'black', background: 'var(--accent-a11)', borderRadius: "0.5rem" }} px="6" py="2">
-                            <QRIcon />
-                            <Text size="2" m="0">Barcodes</Text>
-                        </Flex>
-                    </Flex>
-
-                    <Flex align="center" gap="3">
-                        BAHHH
-                    </Flex>
-
-                    <Flex align="center" gap="2" p="5">
-                        DAHHH
-                    </Flex>
-                </Flex>
-            </Box>
-        </Flex>
+        <div className="flex flex-col shrink-0 gap-6 w-dvw overflow-visible bottom-nav">
+            <div className="mb-5 px-2 rounded-xl shadow mx-auto overflow-visible control-bar backdrop-blur-md">
+                <div className="flex justify-between relative h-full">
+                    <div className="flex items-center p-1 gap-4">
+                        <Link viewTransition={true} to="/" className={app === 'landing' ? 'active' : undefined}>
+                            <div className="flex flex-col gap-1 items-center rounded-xl px-6 py-2">
+                                <PiHouseThin />
+                                <p className="text-sm m-0">Homepage</p>
+                            </div>
+                        </Link>
+                        <Link viewTransition={true} to="/barcode" className={app === 'barcode' ? 'active' : undefined}>
+                            <div className="flex flex-col gap-1 items-center rounded-xl px-6 py-2">
+                                <PiBarcodeThin />
+                                <p className="text-sm m-0">Barcodes</p>
+                            </div>
+                        </Link>
+                        <Link viewTransition={true} to="/sku" className={app === 'sku' ? 'active' : undefined}>
+                            <div className="flex flex-col gap-1 items-center rounded-xl px-6 py-2">
+                                <PiTableThin />
+                                <p className="text-sm m-0">SKU</p>
+                            </div>
+                        </Link>
+                    </div>
+                </div>
+            </div>
+        </div>
     );
 }

@@ -1,8 +1,9 @@
 import * as React from "react";
-import { Popover } from "radix-ui";
+// import { Popover } from "radix-ui";
 import { SketchPicker } from "react-color";
 
 import "./styles.css";
+import * as Popover from "@radix-ui/react-popover";
 
 interface ColorPickerProps {
     value: string;

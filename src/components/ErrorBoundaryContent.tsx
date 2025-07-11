@@ -1,8 +1,10 @@
 import { type FC, type MouseEvent } from "react";
-import { Box, Button, Card, Flex, Heading, Text, } from "@radix-ui/themes";
 import { useShallow } from "zustand/shallow";
-import { useQRStore } from "../store/qr.store";
 import { useErrorBoundary } from "react-error-boundary";
+
+import { useQRStore } from "../store/qr.store";
+import { Card } from "./ui/card";
+import { Button } from "./ui/button";
 
 export const ErrorBoundaryContent: FC = () => {
     const state = useQRStore(useShallow(s => s));
@@ -17,20 +19,22 @@ export const ErrorBoundaryContent: FC = () => {
     }
 
     return (
-        <Flex direction="column" gap="2" p="3" mt="9" align="center">
-            <Card className="p-0" m="0">
-                <Heading className="w-full bg-accent pad" size="2">An error occurred, click reset state to reset state.</Heading>
-                <Box className="pad font-sm">
-                    <Text>Failed with the following state (likely the BCID/Barcode type)</Text>
+        <div className="flex flex-col gap-2 p-3 mt-9 items-center">
+            <Card className="p-0 m-0">
+                <h3 className="scroll-m-20 text-xl font-semibold tracking-tight w-full bg-accent pad">
+                    An error occurred, click reset state to reset state.
+                </h3>
+                <div className="pad font-sm">
+                    <p>Failed with the following state (likely the BCID/Barcode type)</p>
                     <pre>
                         {JSON.stringify(state, null, 2)}
                     </pre>
-                </Box>
+                </div>
 
-                <Box className="w-full bg-accent pad">
-                    <Button onClick={onClick}>Reset State</Button>
-                </Box>
+                <div className="w-full bg-accent pad">
+                    <Button variant="destructive" onClick={onClick}>Reset State</Button>
+                </div>
             </Card>
-        </Flex >
+        </div>
     );
 };
