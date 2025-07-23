@@ -41,18 +41,22 @@ export const SKUControlBar: FC = () => {
     const onRequestDownload = (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         const skus = getSKUList();
-        const res = { skus, qrs: [] };
+        const res = { skus, codes: [] as { sku: string; code: string; }[] };
 
         for (const sku of skus) {
-            bwipjs.toSVG({
+            const code = bwipjs.toSVG({
                 bcid: sku.codeType || qrState.bcid || 'qrcode',
                 text: sku.sku || ' ',
                 textxalign: 'center',
                 textcolor: qrState.color,
                 barcolor: qrState.color,
                 backgroundcolor: qrState.background
-            }),
-                name
+            });
+
+            res.codes.push({
+                sku: sku.sku,
+                code,
+            });
         }
 
         console.log(res);

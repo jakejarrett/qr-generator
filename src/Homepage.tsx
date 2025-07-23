@@ -4,10 +4,12 @@ import { PiTableThin, PiBarcodeThin } from "react-icons/pi";
 
 import { useQRStore } from "./store/qr.store";
 import { LinkCard } from "./components/ui/card";
+import { Input } from "./components/ui/input";
+import { useSKUStore, type SkuItem } from "./store/sku.store";
 
 export const Landing: FC = () => {
-    const state = useQRStore(useShallow(s => s));
-    console.log(state);
+    const QRState = useQRStore(useShallow(s => s));
+    const SKUState = useSKUStore(useShallow(s => s));
     return (
         <div className="flex flex-col justify-center items-center h-dvh w-dvw gap-6">
             <p className="font-bold">
@@ -46,12 +48,28 @@ export const Landing: FC = () => {
                 </LinkCard>
             </div>
 
-            <div>
-                Previous Projects
+            <div className="flex flex-col gap-3">
+                <h3 className="font-semibold text-center">Import Project (JSON / ZIP)</h3>
 
                 <div className="flex flex-col">
-                    <p>Hi</p>
-                    <p>Hi</p>
+                    <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white" htmlFor="file_input">Upload file</label>
+                    <Input
+                        className="w-full cursor-pointer"
+                        id="file_input"
+                        type="file"
+                        onChange={e => {
+                            e.target.files?.[0]?.text().then(contents => {
+                                try {
+                                    const parsed = JSON.parse(contents);
+                                    const skus: SkuItem[] = parsed.skus;
+                                    SKUState.clearItems()
+                                    SKUState.addItems(skus);
+                                } catch (err) {
+                                    console.error(err);
+                                }
+                            }).catch(console.error)
+                        }}
+                    />
                 </div>
             </div>
         </div>
