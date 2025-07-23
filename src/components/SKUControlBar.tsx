@@ -2,7 +2,7 @@ import { useRef, useState, type FC, type MouseEvent } from "react";
 import { useShallow } from "zustand/shallow";
 import bwipjs from 'bwip-js';
 
-import { useSKUStore, type SkuItem } from "@/store/sku.store";
+import { useSKUStore } from "@/store/sku.store";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { getSKUList } from "@/utils/lib";
@@ -59,7 +59,15 @@ export const SKUControlBar: FC = () => {
             });
         }
 
-        console.log(res);
+        const jsonBlob = new Blob([JSON.stringify(res, null, 2)], { type: "application/json" });
+        const jsonUrl = URL.createObjectURL(jsonBlob);
+        const downloadLink = document.createElement("a");
+        downloadLink.href = jsonUrl;
+        downloadLink.download = `sku_list_${new Date().toISOString()}.json`;
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+        URL.revokeObjectURL(jsonUrl);
     };
 
     return (
@@ -75,7 +83,7 @@ export const SKUControlBar: FC = () => {
                     </div>
 
                     <div className="flex items-center gap-2 border-l border-l-gray-10 pl-5">
-                        <Button variant="secondary" className="bg-emerald-700 hover:bg-emerald-800 active:bg-emerald-950 focus:bg-emerald-950" onClick={onRequestDownload}>Download List</Button>
+                        <Button variant="secondary" className="bg-emerald-700 hover:bg-emerald-800 active:bg-emerald-950 focus:bg-emerald-950" onClick={onRequestDownload}>Download List (JSON)</Button>
                     </div>
                 </div>
             </form>

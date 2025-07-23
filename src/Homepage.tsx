@@ -2,14 +2,13 @@ import type { FC } from "react";
 import { useShallow } from "zustand/shallow";
 import { PiTableThin, PiBarcodeThin } from "react-icons/pi";
 
-import { useQRStore } from "./store/qr.store";
 import { LinkCard } from "./components/ui/card";
 import { Input } from "./components/ui/input";
 import { useSKUStore, type SkuItem } from "./store/sku.store";
 
 export const Landing: FC = () => {
-    const QRState = useQRStore(useShallow(s => s));
     const SKUState = useSKUStore(useShallow(s => s));
+
     return (
         <div className="flex flex-col justify-center items-center h-dvh w-dvw gap-6">
             <p className="font-bold">

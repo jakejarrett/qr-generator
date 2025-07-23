@@ -3,8 +3,6 @@ import { matchSorter, rankings } from "match-sorter";
 import { useMemo, useState, type FC } from "react";
 import { BCID_LIST, type SupportedBCID } from "../../bcid";
 import "./style.css";
-import { useShallow } from "zustand/shallow";
-import { useQRStore } from "../../store/qr.store";
 
 import { CheckIcon, ChevronsUpDownIcon } from "lucide-react"
 

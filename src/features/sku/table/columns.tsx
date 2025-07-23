@@ -6,6 +6,7 @@ import { type ColumnDef } from "@tanstack/react-table"
 import type { FC, MouseEvent } from "react"
 import { PiTrashThin } from "react-icons/pi"
 
+// eslint-disable-next-line react-refresh/only-export-components
 const ActionColumn: FC<{ sku: SkuItem["sku"] }> = ({ sku }) => {
     const remove = useSKUStore(s => s.removeItem);
 
