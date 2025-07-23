@@ -1,9 +1,12 @@
+import type { SupportedBCID } from '@/bcid';
 import { create } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
 
-interface SkuItem extends Record<string, string> {
+export interface SkuItem {
     name: string;
-    sku: string;
+    sku: string
+    description: string;
+    codeType?: SupportedBCID;
 }
 
 interface SKUActions {
@@ -37,11 +40,13 @@ export const useSKUStore = create<SKUStore>()(
                     const items = [...current].concat(item);
 
                     set({ items });
+                    window.dispatchEvent(new StorageEvent('storage'));
                 },
                 removeItem: (sku: string) => {
                     const items = [...get().items].filter(item => item.sku !== sku);
 
                     set({ items });
+                    window.dispatchEvent(new StorageEvent('storage'));
                 },
                 addItems: (items) => {
                     const current = get().items;
@@ -53,16 +58,22 @@ export const useSKUStore = create<SKUStore>()(
                     }
 
                     set({ items: [...current, ...newItems] });
+                    window.dispatchEvent(new StorageEvent('storage'));
+
                 },
                 updateItem: (itemId, updatedItem) => {
                     const items = get().items.map(item => (item.sku === itemId ? { ...item, ...updatedItem } : item) as SkuItem);
                     set({ items });
+                    window.dispatchEvent(new StorageEvent('storage'));
                 },
                 getItem: (itemId) => {
                     return get().items.find(item => item.sku === itemId);
                 },
                 getItems: () => get().items,
-                clearItems: () => set({ items: [], })
+                clearItems: () => {
+                    set({ items: [] });
+                    window.dispatchEvent(new StorageEvent('storage'));
+                }
             }),
             {
                 name: 'sku-generator-state',

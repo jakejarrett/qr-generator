@@ -31,7 +31,7 @@ export const App: FC<AppProps> = ({ app }) => {
         {app === "sku" && (
           <>
             <SKUControlBar />
-            <div className="flex flex-col gap-2 p-3 items-center justify-center app-core max-h-dvh">
+            <div className="flex flex-col gap-2 p-3 items-center justify-start app-core max-h-dvh">
               <TableView />
             </div>
             <Frame app={app} />

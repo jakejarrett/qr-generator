@@ -44,10 +44,8 @@ export const QRControlBar: FC = () => {
             <div className="my-5 px-2 rounded-xl shadow mx-auto overflow-visible control-bar backdrop-blur-md w-full max-w-7xl">
                 <div className="flex justify-between relative h-full">
                     <div className="flex items-center p-1 gap-4">
-
                         <div className="flex items-center p-1 gap-2">
                             <BCIDSearch />
-
                             <Input className="rounded-lg box-shadow-none" placeholder="Enter a value here" value={state.code} onChange={e => state.update({ code: e.target.value })} />
                         </div>
                     </div>
