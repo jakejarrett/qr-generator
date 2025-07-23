@@ -1,11 +1,12 @@
 import { useState, type FC, type MouseEvent } from "react";
-import { Box, Button, Flex, Heading, TextField } from "@radix-ui/themes";
 import { useShallow } from "zustand/shallow";
 
 import { useQRStore } from "../store/qr.store";
 import { BCIDSearch } from "./BCIDSearch";
 import { ColorPicker } from "./ColorPicker";
 import bwipjs from 'bwip-js';
+import { Input } from "./ui/input";
+import { Button } from "./ui/button";
 
 const saveSVG = (svg: string, name: string) => {
     const svgBlob = new Blob([svg], { type: "image/svg+xml;charset=utf-8" });
@@ -39,51 +40,33 @@ export const QRControlBar: FC = () => {
 
 
     return (
-        <Flex flexShrink="0" gap="6" direction="column" width="100vw" style={{ overflow: "visible" }}>
-            <Box
-                mt="3"
-                mb="5"
-                px="2"
-                style={{
-                    borderRadius: ".5rem",
-                    boxShadow: "var(--shadow-6)",
-                    marginLeft: 200,
-                    marginRight: 200,
-                    overflow: "visible",
-                    background: 'rgba(255, 255, 255, 0.05)',
-                    backdropFilter: 'blur(10px)'
-                }}
-            >
-                <Flex height="100%" justify="between" position="relative">
-                    <Flex gap="4" align="center" p="1">
-                        <Flex direction="row" align="center" gap="2">
+        <div className="flex shrink-0 gap-6 flex-col w-dvw overflow-visible">
+            <div className="my-5 px-2 rounded-xl shadow mx-auto overflow-visible control-bar backdrop-blur-md w-full max-w-7xl">
+                <div className="flex justify-between relative h-full">
+                    <div className="flex items-center p-1 gap-4">
+                        <div className="flex items-center p-1 gap-2">
                             <BCIDSearch />
+                            <Input className="rounded-lg box-shadow-none" placeholder="Enter a value here" value={state.code} onChange={e => state.update({ code: e.target.value })} />
+                        </div>
+                    </div>
 
-                            <TextField.Root placeholder="Enter a value here" radius="large" className="box-shadow-none" value={state.code} onChange={e => state.update({ code: e.target.value })}>
-                                <TextField.Slot></TextField.Slot>
-                            </TextField.Root>
-                        </Flex>
-                    </Flex>
-
-                    <Flex align="center" gap="3">
-                        <Flex direction="row" align="center" gap="2">
-                            <Heading size="1">Background</Heading>
+                    <div className="flex items-center gap-3">
+                        <div className="flex items-center p-1 gap-2">
+                            <h3 className="text-sm">Background</h3>
                             <ColorPicker value={state.background} onChange={h => state.update({ background: h })} />
-                        </Flex>
-                        <Flex direction="row" align="center" gap="2">
-                            <Heading size="1">Foreground</Heading>
+                        </div>
+                        <div className="flex items-center p-1 gap-2">
+                            <h3 className="text-sm">Foreground</h3>
                             <ColorPicker value={state.color} onChange={h => state.update({ color: h })} />
-                        </Flex>
-                    </Flex>
+                        </div>
+                    </div>
 
-                    <Flex align="center" gap="2" p="5">
-                        <TextField.Root placeholder="Enter file name here" radius="large" className="box-shadow-none" value={name} onChange={e => setName(e.target.value)}>
-                            <TextField.Slot></TextField.Slot>
-                        </TextField.Root>
-                        <Button color="jade" onClick={onClick}>Download</Button>
-                    </Flex>
-                </Flex>
-            </Box>
-        </Flex>
+                    <div className="flex items-center p-5 gap-2">
+                        <Input className="rounded-lg box-shadow-none" placeholder="Enter file name here" value={name} onChange={e => setName(e.target.value)} />
+                        <Button variant="secondary" className="bg-emerald-700 hover:bg-emerald-800 active:bg-emerald-950 focus:bg-emerald-950" onClick={onClick}>Download</Button>
+                    </div>
+                </div>
+            </div>
+        </div>
     );
 };

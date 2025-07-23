@@ -1,0 +1,34 @@
+.bottom-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100dvw;
+    max-width: 100dvw;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 1rem;
+    padding: .5rem;
+    justify-content: center;
+}
+
+.bottom-bar a {
+    text-decoration: none;
+    background-color: rgba(0, 0, 0, 0.3);
+    color: white;
+    padding: 1rem 2rem;
+    display: block;
+    width: auto;
+}
+
+.bottom-bar a:active {
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.bottom-bar a:hover,
+.bottom-bar a:focus {
+    background-color: rgba(0, 0, 0, 0.8);
+}

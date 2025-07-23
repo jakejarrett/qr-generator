@@ -12,6 +12,7 @@ interface QRState {
     code: string;
     color: string;
     background: string;
+    state: 'init' | 'edited';
 }
 
 type QRStore = QRState & QRActions;
@@ -24,10 +25,11 @@ export const useQRStore = create<QRStore>()(
                 code: 'test',
                 color: '#000',
                 background: '#fff',
+                state: 'init',
                 update: (opts) => {
-                    console.log(opts);
                     return set({
                         ...opts,
+                        state: 'edited',
                     })
                 },
                 reset: () => set({
@@ -35,6 +37,7 @@ export const useQRStore = create<QRStore>()(
                     code: 'test',
                     color: '#000',
                     background: '#fff',
+                    state: 'init',
                 }),
             }),
             {
